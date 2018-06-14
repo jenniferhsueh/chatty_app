@@ -5,12 +5,11 @@ class ChatBar extends Component {
     return (
       <footer className="chatbar">
         <input className="chatbar-username" placeholder={this.props.user.name} />
-        <input onKeyPress={this.props.keyPressProp} value={this.props.messages} className="chatbar-message" placeholder="Type a message and hit ENTER" />
+        <input onKeyPress={this.props.keyPress} className="chatbar-message" placeholder="Type a message and hit ENTER" />
       </footer>
     );
   }
 }
-
 // $('div').on('click', function(event) {
 //   do soethign event
 // });
@@ -18,8 +17,6 @@ class ChatBar extends Component {
 // $('div').on('keypress', callback)
 
 // function callback(event) {
-
 // }
-
 
 export default ChatBar;

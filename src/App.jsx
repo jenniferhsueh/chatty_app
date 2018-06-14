@@ -7,22 +7,36 @@ class App extends Component {
     super(props);
     this.state = {
       currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        },
-      ]
+      messages: []
     };
-    this.keyPress = this.keyPress.bind(this);
+    this.addMsg = this.addMsg.bind(this);
+    // this.socket = new WebSocket("ws://localhost:3001/");
   }
 
   componentDidMount() {
+    this.socket = new WebSocket("ws://localhost:3001/"); //
     console.log("componentDidMount <App />");
+    // this.socket.onopen = () => {
+    //   // this.socket.send("Connected to Server");
+    // };
+
+    this.socket.onmessage = (event) => {
+      const value = JSON.parse(event.data);
+      console.log(value)
+      this.setState = (prevState) => ({
+            messages: [...this.prevState.messages, value]
+          });
+    }
+    // this.socket.addEventListener('message', function(msgData) {
+    //   // var output = document.querySelector("#output");
+    //  innerText += msgData;
+    //   // console.log(JSON.stringify(msgData));
+    // })
+
+    // this.socket.addEventListener('message', function(msgData) {
+    //   this.state = 
+    // })
+
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
@@ -33,19 +47,25 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
   }
-
+  
   // keyPress = (event) => { if not using 'bind'
-  keyPress(event) {
+  addMsg(event) {
     if(event.key === 'Enter') {
-      this.setState({
-        messages: [...this.state.messages, {
+      // this.setState({
+      //   messages: [...this.state.messages, {
+      //     username: this.state.currentUser.name,
+      //     content: event.target.value
+      //   }]
+      // })
+      var msgData = {
         username: this.state.currentUser.name,
         content: event.target.value
-        }]
-      })
+      }
+      this.socket.send(JSON.stringify(msgData));
+      event.target.value="";
     }
   }
-
+  
   // keyPress(event) {
   //   console.log(event.target.value)
   //   console.log(event.key)
@@ -69,7 +89,7 @@ class App extends Component {
         <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList msg={this.state.messages}/>
-        <ChatBar user={this.state.currentUser} keyPressProp={this.keyPress} />
+        <ChatBar user={this.state.currentUser} keyPress={this.addMsg} />
       </div>
     );
   }
