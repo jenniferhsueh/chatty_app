@@ -55,8 +55,6 @@ wss.on('connection', (ws) => {
   ws.on('close', () => {
     console.log('Client disconnected');
       let counter = wss.clients.size;
-    // console.log(counter);
-  
     wss.clients.forEach(function each(client) {
       client.send(JSON.stringify({type: "count", connection: counter}))
     }) 
