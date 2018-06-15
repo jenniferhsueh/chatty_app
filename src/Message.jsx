@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
 
 class Message extends Component {
+  notificationOrMsg() {
+    if (this.props.msg.type === "incomingMessage") {
+      return (
+      <div className="message">
+        <span className="message-username">{this.props.msg.username}</span>
+        <span className="message-content">{this.props.msg.content}</span>
+      </div>
+      )
+      } else {
+        return (
+        <div className="message system">{this.props.msg.content}</div>
+      ) 
+      }
+    }
+
   render() {
     return (
-      <main className="messages">
-        <div className="message">
-          <span className="message-username">{this.props.msg.username}</span>
-          <span className="message-content">{this.props.msg.content}</span>
-        </div>
-        {/* <div className="message system">
-          Anonymous1 changed their name to nomnom.
-        </div> */}
-      </main>
-    );
+      this.notificationOrMsg()
+    )
   }
 }
 export default Message;
