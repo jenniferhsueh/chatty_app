@@ -37,22 +37,11 @@ class App extends Component {
             messages: [...prevState.messages, value]
           }));
           break;
-      default:
+        default:
         // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + value.type);
-    }
       }
-    
-
-    setTimeout(() => {
-      console.log("Simulating incoming message");
-      // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
-      // Update the state of the app component.
-      // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
-    }, 3000);
+    }
   }
   
   // keyPress = (event) => { if not using 'bind'
@@ -69,14 +58,20 @@ class App extends Component {
   }
 
   addUser(event) {
-    if(event.key === 'Enter') {
-      console.log(event.target.value);
-      var notification = {
-        username: event.target.value,
-        content: `${this.state.currentUser.name} has changed their name to ${event.target.value}.`,
-        type: "postNotification"
+    if(event.key === "Enter") {
+      console.log(this.state.currentUser.name)
+      console.log(event.target.value)
+      if(event.target.value !== this.state.currentUser.name) {
+        var notification = {
+          username: event.target.value,
+          content: `${this.state.currentUser.name} has changed their name to ${event.target.value}.`,
+          type: "postNotification"
+        }
+        this.socket.send(JSON.stringify(notification));
+      } else {
+        return
       }
-      this.socket.send(JSON.stringify(notification));
+      // console.log(event.target.value);
 
       // this.setState({
       //   currentUser: {name: event.target.value}
@@ -104,6 +99,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
+        <h3>users online</h3>
         </nav>
         <MessageList msg={this.state.messages}/>
         <ChatBar user={this.addUser} keyPress={this.addMsg} />
