@@ -9,9 +9,17 @@ A client-side app, built with ReactJS that communicates with a server via WebSoc
 3. Start the web server using the `npm start` command. The app will be served at <http://localhost:3000/>.
 4. Go to <http://localhost:3000/> in your browser.
 
-### Dependencies
+## Dependencies
 
-* React
-* Webpack
-* [babel-loader](https://github.com/babel/babel-loader)
-* [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+- react
+- react-dom
+- express
+- ws
+- uuid
+
+## Screenshots
+
+!["Screenshot of "]()
+
+!["Screenshot of "]()
+
