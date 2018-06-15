@@ -10,13 +10,5 @@ class ChatBar extends Component {
     );
   }
 }
-// $('div').on('click', function(event) {
-//   do soethign event
-// });
-
-// $('div').on('keypress', callback)
-
-// function callback(event) {
-// }
 
 export default ChatBar;

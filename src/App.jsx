@@ -16,15 +16,11 @@ class App extends Component {
 
   componentDidMount() {
     this.socket = new WebSocket("ws://localhost:3001/"); 
-    console.log("componentDidMount <App />");
     this.socket.onopen = () => {
-    
     };
 
     this.socket.onmessage = (event) => {
       const value = JSON.parse(event.data);
-
-      console.log(value)
       switch(value.type) {
         case "incomingMessage":
           this.setState((prevState) => ({
@@ -46,8 +42,7 @@ class App extends Component {
           }))
           break;
         default:
-        // show an error in the console if the message type is unknown
-        throw new Error("Unknown event type " + value.type);
+          throw new Error("Unknown event type " + value.type);
       }
     }
   }
@@ -55,7 +50,6 @@ class App extends Component {
   addMsg(event) {
     if(event.key === 'Enter') {
       var msgData = {
-        // connection: this.state.connection,
         username: this.state.currentUser.name,
         content: event.target.value,
         type: "postMessage",
@@ -67,8 +61,6 @@ class App extends Component {
 
   addUser(event) {
     if(event.key === "Enter") {
-      console.log(this.state.currentUser.name)
-      console.log(event.target.value)
       if(event.target.value !== this.state.currentUser.name) {
         var notification = {
           username: event.target.value,

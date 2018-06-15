@@ -7,11 +7,12 @@ class MessageList extends Component {
     const messages = this.props.msg;
     return(
     <div> 
-      {messages.map((message, index) => ( //Each child in an array or iterator
-        <Message key={index} msg={message} /> //should have a unique "key" prop
+      {messages.map((message, index) => (
+        <Message key={index} msg={message} /> 
       ))}
     </div>)
   }
 }
+
 export default MessageList;
 
