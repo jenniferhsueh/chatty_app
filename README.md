@@ -2,7 +2,7 @@
 
 A client-side app, built with ReactJS that communicates with a server via WebSockets for multi-user real-time updates. App contains a chat log displaying messages and notifications, as well as an input field to change your name and an input field to send a message. Focus is on client-side experience.
 
-# Stack
+## Stack
 
 - Webpack with Babel, JSX, ES6, webpack dev server
 - WebSockets using Node package ws on the server-side, and native WebSocket on client side
