@@ -1,6 +1,6 @@
 # Chatty App Project
 
-A client-side app, built with ReactJS that communicates with a server via WebSockets for multi-user real-time updates
+A client-side app, built with ReactJS that communicates with a server via WebSockets for multi-user real-time updates. App contains a chat log displaying messages and notifications, as well as an input field to change your name and an input field to send a message. Focus is on client-side experience.
 
 ## Getting Started
 
@@ -19,7 +19,7 @@ A client-side app, built with ReactJS that communicates with a server via WebSoc
 
 ## Screenshots
 
-!["Screenshot of "]()
+!["Screenshot of 1 user name change"](https://github.com/jenniferhsueh/chatty_app/blob/master/docs/1-user-name-change.png?raw=true)
 
-!["Screenshot of "]()
+!["Screenshot of 2 users name change and send message"](https://github.com/jenniferhsueh/chatty_app/blob/master/docs/2-users-name-change-msg.png?raw=true)
 
