@@ -6,23 +6,24 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      currentUser: {name: "Anonymous"},
+      messages: [],
+      connection: 0
     };
     this.addMsg = this.addMsg.bind(this);
     this.addUser = this.addUser.bind(this);
-    // this.socket = new WebSocket("ws://localhost:3001/");
   }
 
   componentDidMount() {
-    this.socket = new WebSocket("ws://localhost:3001/"); //
+    this.socket = new WebSocket("ws://localhost:3001/"); 
     console.log("componentDidMount <App />");
-    // this.socket.onopen = () => {
-    //   // this.socket.send("Connected to Server");
-    // };
+    this.socket.onopen = () => {
+    
+    };
 
     this.socket.onmessage = (event) => {
       const value = JSON.parse(event.data);
+
       console.log(value)
       switch(value.type) {
         case "incomingMessage":
@@ -37,6 +38,13 @@ class App extends Component {
             messages: [...prevState.messages, value]
           }));
           break;
+        case "count":
+          this.setState((prevState) => ({
+            current: {name: value.username},
+            messages: [...prevState.messages, value],
+            connection: value.connection
+          }))
+          break;
         default:
         // show an error in the console if the message type is unknown
         throw new Error("Unknown event type " + value.type);
@@ -44,13 +52,13 @@ class App extends Component {
     }
   }
   
-  // keyPress = (event) => { if not using 'bind'
   addMsg(event) {
     if(event.key === 'Enter') {
       var msgData = {
+        // connection: this.state.connection,
         username: this.state.currentUser.name,
         content: event.target.value,
-        type: "postMessage"
+        type: "postMessage",
       }
       this.socket.send(JSON.stringify(msgData));
       event.target.value="";
@@ -71,35 +79,17 @@ class App extends Component {
       } else {
         return
       }
-      // console.log(event.target.value);
-
-      // this.setState({
-      //   currentUser: {name: event.target.value}
-      // });
     }
   }
-  // keyPress(event) {
-  //   console.log(event.target.value)
-  //   console.log(event.key)
-  //   event.preventDefault();
-  //   if(event.key === 'Enter') {
-  //     this.setState({
-  //       messages: [...this.state.messages, {
-  //       username: this.state.currentUser.name,
-  //       content: event.target.value
-  //       }]
-  //     })
-  //   } else {
-  //     event.target.value += event.key;
-  //   }
-  // }
 
   render() {
     return (
       <div>
         <nav className="navbar">
         <a href="/" className="navbar-brand">Chatty</a>
-        <h3>users online</h3>
+        <h3>
+          {this.state.connection} users online
+        </h3>
         </nav>
         <MessageList msg={this.state.messages}/>
         <ChatBar user={this.addUser} keyPress={this.addMsg} />
